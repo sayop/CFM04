@@ -110,7 +110,7 @@ def updateQvector(inputDict, dt, nSub, pCorr):
       if nSub == 0:
          # pCorr == 1: in first step of updating intermediate time level of velocities,
          # u*, v* at boundaries are evaulated with FDM.
-         if pCorr == 1: updateBoundary = True
+         #if pCorr == 1: updateBoundary = True
          # Add convective flux in x-direction with E vector
          FDM.Q[n] += centralFiniteDifference(-FDM.E[n],'x',1,updateBoundary)
          # Add convective flux in y-direction with F vector
@@ -226,9 +226,12 @@ def updateTimeStep(inputDict,nIter):
 
    dx   = domainVars.dx
    dy   = domainVars.dy
-   dt   = 0.25 * flowVars.Re * min(domainVars.dx, domainVars.dy) ** 2
-   #if nIter == 1:
-   #   dt = timeVars.dtInit
+   #dt   = 0.25 * flowVars.Re * min(domainVars.dx, domainVars.dy) ** 2
+   if nIter == 1:
+      #dt = timeVars.dtInit
+      dt = 0.25 * flowVars.Re * min(domainVars.dx, domainVars.dy) ** 2
+   else:
+      dt = 999999.9
    for j in range(jmax-1):
       if j == 0: continue
       for i in range(imax-1):

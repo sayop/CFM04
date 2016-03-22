@@ -55,7 +55,7 @@ def timeIntegrate(inputDict):
             # pressure correction: Run laplacian equation for pressure
             pressureCorrect(inputDict, dt)
 
-         # if it is projection method, u* and v* will be updated at first and
+         # if it is projection method, u* and v* will be updated at first step and
          # u^(n+1) and v^(n+1) will be later updated at second step.
          # Q vector represents RHS terms when time-integrating U vector.
          # update Q vector for explicit time integration
