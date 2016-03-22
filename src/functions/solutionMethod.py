@@ -100,6 +100,7 @@ def updateQvector(inputDict, dt, nSub, pCorr):
       if n == 0:
          # if True, the flux vector will have non-zero value at boundary
          # in order to update the primative variable at such boundary.
+         # At boundary, no BC needed for continuity equation.
          updateBoundary = True
          #updateBoundary = False
       else:
@@ -107,6 +108,8 @@ def updateQvector(inputDict, dt, nSub, pCorr):
       # clean Q vector to store new values
       FDM.Q[n] = np.zeros((imax,jmax))
       if nSub == 0:
+         # pCorr == 1: in first step of updating intermediate time level of velocities,
+         # u*, v* at boundaries are evaulated with FDM.
          if pCorr == 1: updateBoundary = True
          # Add convective flux in x-direction with E vector
          FDM.Q[n] += centralFiniteDifference(-FDM.E[n],'x',1,updateBoundary)
@@ -139,14 +142,14 @@ def centralFiniteDifference(phi, direction, nOrder, updateBoundary):
          for j in range(jmax):
             if updateBoundary == False and j == 0: continue
             if updateBoundary == False and j == jmax-1: continue
-            for i in range(imax-1):
+            for i in range(imax):
                if updateBoundary == False and i == 0: continue
                if updateBoundary == False and i == imax-1: continue
                # if current node is located at boundary, forward or backward difference is used. (First order)
                if i == 0:
                   # forward difference
                   f[i,j] = (phi[i+1,j] - phi[i,j]) / dx
-               if i == imax-1:
+               elif i == imax-1:
                   # backward difference
                   f[i,j] = (phi[i,j] - phi[i-1,j]) / dx
                else:
@@ -163,7 +166,7 @@ def centralFiniteDifference(phi, direction, nOrder, updateBoundary):
                if j == 0:
                   # forward difference
                   f[i,j] = (phi[i,j+1] - phi[i,j]) / dy
-               if j == jmax-1:
+               elif j == jmax-1:
                   # backward difference
                   f[i,j] = (phi[i,j] - phi[i,j-1]) / dy
                else:
@@ -173,18 +176,38 @@ def centralFiniteDifference(phi, direction, nOrder, updateBoundary):
    if nOrder == 2:
       # x-derivative
       if direction == 'x':
-         for j in range(jmax-1):
+         for j in range(jmax):
             if updateBoundary == False and j == 0: continue
-            for i in range(imax-1):
+            if updateBoundary == False and j == jmax-1: continue
+            for i in range(imax):
                if updateBoundary == False and i == 0: continue
-               f[i,j] = (phi[i+1,j] - 2.0*phi[i,j] + phi[i-1,j]) / dx ** 2
+               if updateBoundary == False and i == imax-1: continue
+               # if current node is located at boundary, forward or backward difference is used. (Second order)
+               if i == 0:
+                  # forward difference
+                  f[i,j] = (phi[i,j] - 2.0*phi[i+1,j] + phi[i+2,j]) / dx ** 2
+               elif i == imax-1:
+                  # backward difference
+                  f[i,j] = (phi[i-2,j] - 2.0*phi[i-1,j] + phi[i,j]) / dx ** 2
+               else:
+                  f[i,j] = (phi[i+1,j] - 2.0*phi[i,j] + phi[i-1,j]) / dx ** 2
       # y-derivative
       if direction == 'y':
-         for i in range(imax-1):
+         for i in range(imax):
             if updateBoundary == False and i == 0: continue
-            for j in range(jmax-1):
+            if updateBoundary == False and i == imax-1: continue
+            for j in range(jmax):
                if updateBoundary == False and j == 0: continue
-               f[i,j] = (phi[i,j+1] - 2.0*phi[i,j] + phi[i,j-1]) / dy ** 2
+               if updateBoundary == False and j == jmax-1: continue
+               # if current node is located at boundary, forward or backward difference is used. (Second order)
+               if j == 0:
+                  # forward difference
+                  f[i,j] = (phi[i,j] - 2.0*phi[i,j+1] + phi[i,j+2]) / dy ** 2
+               elif j == jmax-1:
+                  # backward difference
+                  f[i,j] = (phi[i,j-2] - 2.0*phi[i,j-1] + phi[i,j]) / dy ** 2
+               else:
+                  f[i,j] = (phi[i,j+1] - 2.0*phi[i,j] + phi[i,j-1]) / dy ** 2
 
    return f
 
@@ -273,13 +296,15 @@ def updatePressureBC(imax, jmax):
    flowVars.p[0,jmax-1] = flowVars.p[1,jmax-2]
    flowVars.p[imax-1,jmax-1] = flowVars.p[imax-2,jmax-2]
 
-def updatePrimitiveVars(pCorr,imax,jmax,dt):
+def updatePrimitiveVars(pCorr,imax,jmax,dt,updateBoundary):
 
-   # update primative vector U
-   for j in range(jmax-1):
-      if j == 0: continue
-      for i in range(imax-1):
-         if i == 0: continue
+   # update primative vector U in interior points
+   for j in range(jmax):
+      if updateBoundary == False and j == 0: continue
+      if updateBoundary == False and j == jmax-1: continue
+      for i in range(imax):
+         if updateBoundary == False and i == 0: continue
+         if updateBoundary == False and i == imax-1: continue
          if pCorr != 1: flowVars.p[i,j] += dt * FDM.Q[0][i,j]
          flowVars.u[i,j] += dt * FDM.Q[1][i,j]
          flowVars.v[i,j] += dt * FDM.Q[2][i,j]

@@ -23,10 +23,10 @@ def initSimulationVars(inputDict):
    print "# - Reference Reynolds number: Re = ", flowVars.Re
 
    # Populate boundary values that is specified by user in inputs.in
-   updateBC(inputDict,imax,jmax)
+   updateVelocityBC(inputDict,imax,jmax)
 
 
-def updateBC(inputDict,imax,jmax):
+def updateVelocityBC(inputDict,imax,jmax):
    # update boundary values of u and v in dimensionalized form
    # Left boundary
    flowVars.u[0,:] = float(inputDict['uLeft'])

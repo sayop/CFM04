@@ -62,10 +62,14 @@ def timeIntegrate(inputDict):
          updateQvector(inputDict, dt, n, pCorr)
 
          # update new time level of p, u, v in primitive variable form
-         updatePrimitiveVars(pCorr,imax,jmax,dt)
+         updateBoundary = False
+         # u* and v* need to be updated at boundaries
+         #if pCorr == 1 and n == 0: updateBoundary = True
+         updatePrimitiveVars(pCorr,imax,jmax,dt,updateBoundary)
 
       # update boundary condition for pressure only
-      updatePressureBC(imax, jmax)
+      if pCorr != 1: updatePressureBC(imax, jmax)
+
 
       # compute residual value to verify convergence
       residual = computeResidual(imax, jmax, dt, FDM.Q)
