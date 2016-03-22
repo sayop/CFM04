@@ -14,12 +14,7 @@ def timeIntegrate(inputDict):
    beta    = float(inputDict['Beta'])
    residualMin = float(inputDict['residualMin'])
    nIterWrite  = int(inputDict['nIterWrite'])
-   nOrderTime  = int(inputDict['nOrderTime'])
 
-   if nOrderTime == 2:
-      pNew = np.zeros((imax,jmax))
-      uNew = np.zeros((imax,jmax))
-      vNew = np.zeros((imax,jmax))
 
    # initialize residual variables for p, u, and v
    residualInit = np.zeros(3)
@@ -52,18 +47,22 @@ def timeIntegrate(inputDict):
       populateFluxVectors(pCorr,inputDict)
       
       # find dt with stability condition
-      dt = updateTimeStep(inputDict)
+      dt = updateTimeStep(inputDict,nIter)
 
       for n in range(nSubIter):
          if n == 1:
+            # Second step for projection method
             # pressure correction: Run laplacian equation for pressure
             pressureCorrect(inputDict, dt)
 
+         # if it is projection method, u* and v* will be updated at first and
+         # u^(n+1) and v^(n+1) will be later updated at second step.
+         # Q vector represents RHS terms when time-integrating U vector.
          # update Q vector for explicit time integration
-         updateQvector(inputDict, dt, n)
+         updateQvector(inputDict, dt, n, pCorr)
 
          # update new time level of p, u, v in primitive variable form
-         updatePrimitiveVars(nOrderTime,imax,jmax,dt)
+         updatePrimitiveVars(pCorr,imax,jmax,dt)
 
       # update boundary condition for pressure only
       updatePressureBC(imax, jmax)
@@ -78,8 +77,11 @@ def timeIntegrate(inputDict):
 
       # dimensionless time increment because all the time variables have been non-dimensionalized above.
       t += dt
-      MachX, MachY = computeMaximumMach(imax, jmax, beta)
-      print "|- nIter = %s" % nIter, ", t = %.6f" % t, ", dt = %.6f" % dt, ", Maximum Mach_x = %.4f" % MachX, ", Maximum Mach_y = %.4f" % MachY, ", u-residual = %.5f" % resNorm
+      if pCorr != 1:
+         MachX, MachY = computeMaximumMach(imax, jmax, beta)
+         print "|- nIter = %s" % nIter, ", t = %.6f" % t, ", dt = %.6f" % dt, ", Maximum Mach_x = %.4f" % MachX, ", Maximum Mach_y = %.4f" % MachY, ", u-residual = %.5f" % resNorm
+      elif pCorr == 1:
+         print "|- nIter = %s" % nIter, ", t = %.6f" % t, ", dt = %.6f" % dt, ", u-residual = %.5f" % resNorm
 
       if (nIter % nIterWrite == 0):
          dimensionalize(inputDict, 1, 1, 0)

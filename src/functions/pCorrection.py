@@ -21,9 +21,10 @@ def pressureCorrect(inputDict, dt):
       # run with point-iteration method: will update new pressure at new time level
       #flowVars.p, residual = pointIterJacobi(flowVars.p, RHS, imax, jmax, alpha)
       flowVars.p, res = pointIterJacobi(flowVars.p, RHS, imax, jmax, alpha)
+      #updatePressureBC(imax, jmax)
+
       residual = computeResidual(flowVars.p, RHS, imax, jmax)
       # update boundary condition for pressure only
-      #updatePressureBC(imax, jmax)
       # compute residual at initial sate
       #if niter == 0: residualInit = max(1e-99,residual)
       residual = residual / residualInit
@@ -34,6 +35,7 @@ def pressureCorrect(inputDict, dt):
 
 def pointIterJacobi(phi, RHS, imax, jmax, alpha):
    newPhi = phi
+   #newPhi = np.zeros((imax,jmax))
    residual = 0.0
    dx = domainVars.dx
    dy = domainVars.dy

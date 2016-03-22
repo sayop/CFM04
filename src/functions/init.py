@@ -5,7 +5,7 @@ def initSimulationVars(inputDict):
    print '# Initializing flow variables...'
    imax = int(inputDict['iDim'])
    jmax = int(inputDict['jDim'])
-   dTmax = float(inputDict['dTmax'])
+   dtInit = float(inputDict['dtInit'])
 
    flowVars.nu   = float(inputDict['nu'])
    flowVars.Uref = float(inputDict['uUp'])
@@ -16,7 +16,7 @@ def initSimulationVars(inputDict):
    flowVars.v    = np.zeros((imax,jmax))
 
    # initial time step
-   timeVars.dTmax = dTmax
+   timeVars.dtInit = dtInit
 
    # Evaluate reference Re number
    flowVars.Re = flowVars.Uref * domainVars.Lref / flowVars.nu

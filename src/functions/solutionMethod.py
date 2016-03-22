@@ -24,7 +24,7 @@ def nondimensionalize(inputDict, idomain, iflow, itime):
       Uref = flowVars.Uref
       timeVars.t = timeVars.t * Uref / Lref
       timeVars.dt = timeVars.dt * Uref / Lref
-      timeVars.dTmax = timeVars.dTmax * Uref / Lref
+      timeVars.dtInit = timeVars.dtInit * Uref / Lref
       
 
 def dimensionalize(inputDict, idomain, iflow, itime):
@@ -48,7 +48,7 @@ def dimensionalize(inputDict, idomain, iflow, itime):
       Uref = flowVars.Uref
       timeVars.t = timeVars.t * Lref / Uref
       timeVars.dt = timeVars.dt * Lref / Uref
-      timeVars.dTmax = timeVars.dTmax * Lref / Uref
+      timeVars.dtInit = timeVars.dtInit * Lref / Uref
 
 def populateFluxVectors(pCorr,inputDict):
    # Make sure that all the flux vectors' elements should be evaluated 
@@ -91,21 +91,23 @@ def populateFluxVectors(pCorr,inputDict):
       FDM.D[2] = flowVars.v
 
 
-def updateQvector(inputDict, dt, nSub):
+def updateQvector(inputDict, dt, nSub, pCorr):
    imax = int(inputDict['iDim'])
    jmax = int(inputDict['jDim'])
 
    for n in range(3):
-      if n == 0: 
+      
+      if n == 0:
          # if True, the flux vector will have non-zero value at boundary
          # in order to update the primative variable at such boundary.
-         #updateBoundary = True
-         updateBoundary = False
+         updateBoundary = True
+         #updateBoundary = False
       else:
          updateBoundary = False
       # clean Q vector to store new values
       FDM.Q[n] = np.zeros((imax,jmax))
       if nSub == 0:
+         if pCorr == 1: updateBoundary = True
          # Add convective flux in x-direction with E vector
          FDM.Q[n] += centralFiniteDifference(-FDM.E[n],'x',1,updateBoundary)
          # Add convective flux in y-direction with F vector
@@ -134,10 +136,12 @@ def centralFiniteDifference(phi, direction, nOrder, updateBoundary):
    if nOrder == 1:
       # x-derivative
       if direction == 'x':
-         for j in range(jmax-1):
+         for j in range(jmax):
             if updateBoundary == False and j == 0: continue
+            if updateBoundary == False and j == jmax-1: continue
             for i in range(imax-1):
                if updateBoundary == False and i == 0: continue
+               if updateBoundary == False and i == imax-1: continue
                # if current node is located at boundary, forward or backward difference is used. (First order)
                if i == 0:
                   # forward difference
@@ -149,10 +153,12 @@ def centralFiniteDifference(phi, direction, nOrder, updateBoundary):
                   f[i,j] = 0.5 * (phi[i+1,j] - phi[i-1,j]) / dx
       # y-derivative
       if direction == 'y':
-         for i in range(imax-1):
+         for i in range(imax):
             if updateBoundary == False and i == 0: continue
-            for j in range(jmax-1):
+            if updateBoundary == False and i == imax-1: continue
+            for j in range(jmax):
                if updateBoundary == False and j == 0: continue
+               if updateBoundary == False and j == jmax-1: continue
                # if current node is located at boundary, forward or backward difference is used. (First order)
                if j == 0:
                   # forward difference
@@ -182,11 +188,12 @@ def centralFiniteDifference(phi, direction, nOrder, updateBoundary):
 
    return f
 
-def updateTimeStep(inputDict):
+def updateTimeStep(inputDict,nIter):
    imax = int(inputDict['iDim'])
    jmax = int(inputDict['jDim'])
    Cr   = float(inputDict['Courant'])
    pCorr = float(inputDict['pCorr'])
+  
    if pCorr != 1:
       # Artificial speed of sound
       beta = float(inputDict['Beta'])
@@ -196,7 +203,9 @@ def updateTimeStep(inputDict):
 
    dx   = domainVars.dx
    dy   = domainVars.dy
-   dt   = timeVars.dTmax
+   dt   = 0.25 * flowVars.Re * min(domainVars.dx, domainVars.dy) ** 2
+   #if nIter == 1:
+   #   dt = timeVars.dtInit
    for j in range(jmax-1):
       if j == 0: continue
       for i in range(imax-1):
@@ -264,32 +273,16 @@ def updatePressureBC(imax, jmax):
    flowVars.p[0,jmax-1] = flowVars.p[1,jmax-2]
    flowVars.p[imax-1,jmax-1] = flowVars.p[imax-2,jmax-2]
 
-def updatePrimitiveVars(nOrderTime,imax,jmax,dt):
+def updatePrimitiveVars(pCorr,imax,jmax,dt):
 
    # update primative vector U
-   if nOrderTime == 1 or nIter == 1:
-      for j in range(jmax):
-         for i in range(imax):
-            flowVars.p[i,j] += dt * FDM.Q[0][i,j]
-            flowVars.u[i,j] += dt * FDM.Q[1][i,j]
-            flowVars.v[i,j] += dt * FDM.Q[2][i,j]
-
-   if nOrderTime == 2:
-      if nIter > 1:
-         # New values: n+1 time level
-         for j in range(jmax):
-            for i in range(imax):
-               pNew[i,j] = pOld[i,j] + 2.0*dt * FDM.Q[0][i,j]
-               uNew[i,j] = uOld[i,j] + 2.0*dt * FDM.Q[1][i,j]
-               vNew[i,j] = vOld[i,j] + 2.0*dt * FDM.Q[2][i,j]
-      # Old values: n-1 time level
-      pOld = flowVars.p
-      uOld = flowVars.u
-      vOld = flowVars.v
-      if nIter > 1:
-         flowVars.p = pNew
-         flowVars.u = uNew
-         flowVars.v = vNew
+   for j in range(jmax-1):
+      if j == 0: continue
+      for i in range(imax-1):
+         if i == 0: continue
+         if pCorr != 1: flowVars.p[i,j] += dt * FDM.Q[0][i,j]
+         flowVars.u[i,j] += dt * FDM.Q[1][i,j]
+         flowVars.v[i,j] += dt * FDM.Q[2][i,j]
 
 
 

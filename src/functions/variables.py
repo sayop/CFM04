@@ -21,7 +21,7 @@ class flowVars:
 
 class timeVars:
    dt = 0.0
-   dTmax = 0.0
+   dtInit = 0.0
    t = 0.0
 
 class FDM:
