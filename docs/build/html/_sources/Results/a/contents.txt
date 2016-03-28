@@ -42,7 +42,39 @@ In this problem set, we are supposed to solve the Navier-Stokes equations having
 
 - Projection method
 
-  lll
+  Given partial differention equation set is composed of continuity and momentum conservation equations. By contrary to the artificial compressiblity method, the projection method is to solve this equation set with incompressible solution method, so-called, pressure-based method. In this type of method, the continuity equation is not directly solved but used for divergence-free constraint, which is an outcome of incompressible flow continuity feature.
+
+  The momentum equation given in the tensor form can be recast in terms of time differential form as shown below. And the convective and diffusion flux terms are combined together to express a simple form of spatially differenciated flow quantities in terms of :math:`u` and :math:`v`. And the pressure derivative term is left alone for a particular purpose of pressure correction.
+
+
+  .. math::
+
+     \frac{\partial u_{i}}{\partial t} = H_{i} -\frac{\partial p}{\partial x_{i}}
+
+  where the convection terms are represented by :math:`H_{i}`:
+
+  .. math::
+
+     H_{i} = -\frac{\partial u_{i}u_{j}}{\partial x_{j}} + \frac{1}{\text{Re}}\frac{\partial^{2} u_{i}}{\partial x_{j} \partial x_{j}}
+
+
+  Here, the above expression can be again discretized in two separate time steps having different right hand side quantities. Two separate the temporal difference, we employs an intermediate time indicated by :math:`*`. The intermediate time level of velocity is updated without pressure derivative term. So this time level is incomplete so it is not divergence free.
+
+  .. math::
+
+     \frac{u^{*}_{i} - u^{n}_{i}}{\Delta t} = H_{i}
+
+  .. math::
+
+     \frac{u^{n+1}_{i} - u^{*}_{i}}{\Delta t} = -\frac{\partial p^{n+1}}{\partial x_{i}}
+
+  Summing above two equations gives a complete form of temporal difference equation of momentum conservation equation. Then to find the divergence free and next time level of velocity components, we need to first evaluate the intermediate velocity quantities and pressure at the next time level. But, the given form of equation is not well posed because we haven't yet solved next time level of pressure which also satisfies the divergence free constraint. To do this, we need to take divergence of the equation then it gives a elliptic equation form what is called Poisson's equation.
+
+  .. math::
+
+     \frac{1}{\Delta t} \frac{\partial u^{*}}{\partial x_{i}} = \frac{\partial^{2} p^{n+1}}{\partial x_{i} \partial x_{i}}
+
+
 
   
 - Vector form of transport equations
