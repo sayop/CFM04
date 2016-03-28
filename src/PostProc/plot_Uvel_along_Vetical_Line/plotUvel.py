@@ -31,7 +31,7 @@ MinX = -0.25#min(uVelList2)
 MaxX = 1.0#max(uVelList2)
 
 p = plt.plot(uVelList1,yList1, 'ko', markersize=15, label="Ghia's data")
-p = plt.plot(uVelList2,yList2, 'r-', label='20x20')
+p = plt.plot(uVelList2,yList2, 'r-', label='40x40')
 plt.setp(p, linewidth='3.0')
 
 plt.axis([MinX,MaxX, MinY, MaxY])

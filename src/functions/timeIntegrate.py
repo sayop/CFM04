@@ -65,14 +65,14 @@ def timeIntegrate(inputDict):
          updateBoundary = False
          # u* and v* need to be updated at boundaries
          #if pCorr == 1 and n == 0: updateBoundary = True
-         updatePrimitiveVars(pCorr,imax,jmax,dt,updateBoundary)
+         updatePrimitiveVars(pCorr,imax,jmax,dt,updateBoundary,n)
 
-      # update boundary condition for pressure only
-      if pCorr != 1: updatePressureBC(imax, jmax)
+         # update boundary condition for pressure only
+         if pCorr != 1 and n == 0: updatePressureBC(imax, jmax)
 
 
       # compute residual value to verify convergence
-      residual = computeResidual(imax, jmax, dt, FDM.Q)
+      residual = computeResidual(pCorr, imax, jmax, dt, FDM.Q)
       if nIter == 1:
          residualInit = residual
       # trace residual for u-velocity

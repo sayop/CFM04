@@ -244,15 +244,20 @@ def updateTimeStep(inputDict,nIter):
    return dt
 
 
-def computeResidual(imax, jmax, dt, Q):
+def computeResidual(pCorr, imax, jmax, dt, Q):
    res = np.zeros(3)
    # compute residual for pressure, u, and v
    for n in range(3):
-      for j in range(jmax):
-         for i in range(imax):
-            res[n] += (dt * Q[n][i,j]) ** 2
+      for j in range(jmax-1):
+         if j == 0: continue
+         for i in range(imax-1):
+            if i == 0: continue
+            if pCorr != 1:
+               res[n] += (dt * Q[n][i,j]) ** 2
+            elif pCorr == 1:
+               res[n] += FDM.residual[n][i,j] ** 2
    
-      res[n] = np.sqrt( res[n] / (imax*jmax) )
+      res[n] = np.sqrt( res[n] / ((imax-2)*(jmax-2)) )
 
    return res
 
@@ -299,7 +304,7 @@ def updatePressureBC(imax, jmax):
    flowVars.p[0,jmax-1] = flowVars.p[1,jmax-2]
    flowVars.p[imax-1,jmax-1] = flowVars.p[imax-2,jmax-2]
 
-def updatePrimitiveVars(pCorr,imax,jmax,dt,updateBoundary):
+def updatePrimitiveVars(pCorr,imax,jmax,dt,updateBoundary, nsub):
 
    # update primative vector U in interior points
    for j in range(jmax):
@@ -312,5 +317,17 @@ def updatePrimitiveVars(pCorr,imax,jmax,dt,updateBoundary):
          flowVars.u[i,j] += dt * FDM.Q[1][i,j]
          flowVars.v[i,j] += dt * FDM.Q[2][i,j]
 
+   # update residual
+   if pCorr == 1:
 
+      if nsub == 0:
+         for n in range(3):
+            FDM.residual[n] = np.zeros((imax,jmax))
+
+      for n in range(3):
+         for j in range(jmax):
+            for i in range(imax):
+               FDM.residual[n][i,j] += dt * FDM.Q[n][i,j]
+
+   
 

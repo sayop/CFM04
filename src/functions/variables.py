@@ -39,3 +39,6 @@ class FDM:
    
    # Q vector for explicit time integration
    Q = [None] * 3
+
+   # residual
+   residual = [None] * 3
