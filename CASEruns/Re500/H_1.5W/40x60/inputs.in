@@ -1,0 +1,27 @@
+#grid dimension
+iDim            40
+jDim		60
+xmin            0
+xmax            10
+ymin            0
+ymax            15
+#boundary conditions
+uLeft		0.0
+vLeft		0.0
+uRight		0.0
+vRight		0.0
+uBottom		0.0
+vBottom		0.0
+uUp		50.0
+vUp		0.0
+# fluid kinematic properties
+nu		1.0
+pInit		1.0
+#simulation setup
+maxIter         20000000
+Courant         0.1
+Beta		0.5
+residualMin	0.00005
+nOrderTime	1
+#Post-Process
+nIterWrite      2000
