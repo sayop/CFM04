@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Problem1 - a &mdash; CFM04 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CFM04 0.0.1 documentation" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CFM04 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="problem1-a">
+<h1>Problem1 - a<a class="headerlink" href="#problem1-a" title="Permalink to this headline">¶</a></h1>
+<p>Describe the essential steps of the solution method. Include the discretized equations and implementation of boundary conditions.</p>
+<p>In this problem set, we are supposed to solve the Navier-Stokes equations having continuity and momentum conservation equations together. Tensor forms of continuity and momentum equations are given below:</p>
+<ul>
+<li><p class="first">Continuity (incompressible)</p>
+<div class="math">
+\[\frac{\partial u_{i}}{\partial x_{i}} = 0\]</div>
+</li>
+<li><p class="first">Momentum equation:</p>
+<div class="math">
+\[\frac{\partial u_{i}}{\partial t} + \frac{\partial u_{i}u_{j}}{\partial x_{j}} = -\frac{1}{\rho}\frac{\partial p}{\partial x_{i}} + \nu \frac{\partial}{\partial x_{j}}\left ( \frac{\partial u_{i}}{\partial x_{j}} \right )\]</div>
+</li>
+<li><p class="first">Non-dimensionalization of the Navier-Stokes equations</p>
+<p>In some cases, it is beneficial to non-dimensionalize the given transport equation because it eases the analysis of problem of interest, and also may reduce the number of parameters. The non-dimensionalized form of the Navier-Stokes equation can be achieved by first normalizing the primitive variables as followings:</p>
+<div class="math">
+\[\tilde{u_{i}} = \frac{u_{i}}{U_{\text{ref}}},\;\;  \tilde{x_{i}} = \frac{x_{i}}{L_{\text{ref}}},\;\; \tilde{\rho}=\frac{\rho}{\rho_{\text{ref}}},\;\;\tilde{P} = \frac{P}{\rho_{\text{ref}}\, U^{2}_{\text{ref}}},\;\; \tilde{t}=\frac{t}{L/U_{\text{ref}}}\]</div>
+<p>For the final form of non-dimensionalized Navier-Stokes equation, tilda, <span class="math">\(\tilde{}\)</span>, will be dropped out for brevity and a new non-dimensional physical parameter <span class="math">\(Re\)</span> that represents the flow intertia against the fluid viscosity is introduced. Now we got:</p>
+<div class="math">
+\[\frac{\partial u_{i}}{\partial t} + \frac{\partial u_{i}u_{j}}{\partial x_{j}} = -\frac{1}{\rho}\frac{\partial p}{\partial x_{i}} + \frac{1}{\text{Re}} \frac{\partial}{\partial x_{j}}\left ( \frac{\partial u_{i}}{\partial x_{j}} \right )\]</div>
+<p>where the Reynolds number is defined as:</p>
+<div class="math">
+\[\text{Re} = \frac{U_{\text{ref}}L_{\text{ref}}}{\nu}\]</div>
+</li>
+<li><p class="first">Projection method</p>
+<p>lll</p>
+</li>
+<li><p class="first">Vector form of transport equations</p>
+<p>Rewriting the previously drived non-dimensionalized continuity and momentum equation in vector form generates a simple format that eases implementation of the numerical method. The above transport equation can be newly formed as shown below:</p>
+<div class="math">
+\[\frac{\partial \vec{U}}{\partial t} + \frac{\partial \vec{E}}{\partial x} + \frac{\partial \vec{F}}{\partial y} = \frac{1}{\text{Re}} \left ( \frac{\partial^{2}}{\partial x^{2}} + \frac{\partial^{2}}{\partial y^{2}} \right ) \vec{U}\]</div>
+<p>where the each of vector elements are summarized below:</p>
+<div class="math">
+\[\begin{split}\vec{U} = \begin{bmatrix}P\\ u\\ v \end{bmatrix}, \;\; \vec{E} = \begin{bmatrix} \frac{u}{\beta}\\ uu + P\\ uv\end{bmatrix}, \;\; \vec{F} = \begin{bmatrix} \frac{v}{\beta}\\ uv\\ vv + P\end{bmatrix}\end{split}\]</div>
+<p>Now this is good to go further for descritization because the given task is to solve explicit form of discretization equation. Even though the derived form of transport equation is not linearized, each of vectors above are easily discretized in terms of their elements that are combinations of each primitive variables. Thus, in this project, actual discretization has been doen form the driven transport equation above.</p>
+</li>
+<li><p class="first">Finding time step algorithm</p>
+<p>In order to find time step that may stabilize the numerical solution, we need to know system convecting velocity as we pick the coefficient of spatial derivative terms in Burger&#8217;s and Euler equations as the convection velocity. The driven system of equation is not a single partial different equation but a set of three different partial different equation. To find the convection speed of numerical information in the time and space domains, we need to first linearize the given system of equations and find the Eigen values. The linearization can be obatained by following process. The driven system of PDE should be reformulated in linearized set of equations:</p>
+<div class="math">
+\[\frac{\partial \vec{U}}{\partial t}  + \left [ A \right ] \frac{\partial \vec{U}}{\partial x} + \left [ B \right ] \frac{\partial \vec{U}}{\partial y} = \frac{1}{\text{Re}} \left ( \frac{\partial^{2}}{\partial x^{2}} + \frac{\partial^{2}}{\partial y^{2}} \right ) \vec{U}\]</div>
+<p>Now we have found two coefficient matrices of convection terms and the spatial derivatives is now taken with respect to <span class="math">\(\vec{U}\)</span> only. Despite the vector form, the PDE form is a identical with Burger&#8217;s equation. The coefficient matrices are below listed:</p>
+<div class="math">
+\[\begin{split}\left [ A \right ] = \begin{bmatrix} 0 &amp; \frac{1}{\beta} &amp; 0 \\ 1 &amp; 2u &amp; 0\\ 0 &amp; v &amp; u \end{bmatrix}, \;\; \left [ B \right ] = \begin{bmatrix} 0 &amp; 0 &amp; \frac{1}{\beta} \\ 0 &amp; v &amp; u\\ 1 &amp; 0 &amp; 2v \end{bmatrix}\end{split}\]</div>
+<p>The resolved Eigen values of <span class="math">\(\left [ A \right ]\)</span> and <span class="math">\(\left [ B \right ]\)</span> matrices are <span class="math">\(u, u+a, u-a\)</span> and <span class="math">\(v, v+a, v-a\)</span>, respectively. Taking <span class="math">\(\left [ A \right ]\)</span> for example, the maximum convection velocity that transmit the numerical information can then be <span class="math">\(\left | u  \right | + a\)</span>. Therefore, the Courant number for this case can also be determined by:</p>
+<div class="math">
+</div>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/Results/a/contents.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CFM04 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Sayop Kim.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

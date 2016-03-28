@@ -2,6 +2,7 @@ import numpy as np
 from solutionMethod import *
 from pCorrection import pressureCorrect
 from post import *
+from init import *
 import time
 
 def timeIntegrate(inputDict):
@@ -67,6 +68,14 @@ def timeIntegrate(inputDict):
          #if pCorr == 1 and n == 0: updateBoundary = True
          updatePrimitiveVars(pCorr,imax,jmax,dt,updateBoundary,n)
 
+
+         # update u, v BC
+         #if pCorr == 1 and n == 1:
+         #   dimensionalize(inputDict, 1, 1, 0)
+         #   updateVelocityBC(inputDict,imax,jmax)
+         #   nondimensionalize(inputDict, 1, 1, 0)
+
+         #print flowVars.u
          # update boundary condition for pressure only
          if pCorr != 1 and n == 0: updatePressureBC(imax, jmax)
 
