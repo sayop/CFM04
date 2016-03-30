@@ -113,19 +113,24 @@ In this test, the lid cavity's velocity is set to make the Reynolds number set t
  Re = 500
 ---------
 
+In this test, the lid cavity velocity is set to 50 m/s to make the Reynolds number 500. Two different grid spacing are employed to see the qualitative pattern of grid size effect on numerical solution.
 
 - NxN = 20x20
 
 .. image:: ./images/Re500/strm_20x20.png
    :width: 50%
 
+<Streamlines of 20x20 case runs>
 
 .. image:: ./images/Re500/uVel_20x20.png
    :width: 40%
 
+<Centerline u-velocity>
 
 .. image:: ./images/Re500/vVel_20x20.png
    :width: 40%
+
+<Centerline v-velocity>
 
 |
 
@@ -135,10 +140,21 @@ In this test, the lid cavity's velocity is set to make the Reynolds number set t
 .. image:: ./images/Re500/strm_40x40.png
    :width: 50%
 
+<Streamlines of 40x40 case runs>
 
 .. image:: ./images/Re500/uVel_40x40.png
    :width: 40%
 
+<Centerline u-velocity>
+
 
 .. image:: ./images/Re500/vVel_40x40.png
    :width: 40%
+
+<Centerline v-velocity>
+
+  - **Observation**
+    
+    - The faster lid cavity velocity makes the distictive vortex at two corners on the bottom where as Re=100 case produces very weak vortext at the same location.
+    - The denser grid resolution makes the vortext look more distinctive and bigger than the coarser grid resolution.
+

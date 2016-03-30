@@ -17,8 +17,8 @@ Here, the test has conducted with Re = 10,000 such that the equation almost goes
 
 - Effect of grid spacing on the temporal evolution of axial velocity residual. (Re = 10,000)
 
-  .. figure:: ./images/gridSpacing.png
-     :scale: 80%
+  .. image:: ./images/gridSpacing.png
+     :width: 50%
 
 
 ------------------
@@ -28,8 +28,9 @@ Here, the test has conducted with Re = 10,000 such that the equation almost goes
 In this code, the variable time step method is used to maintain stable numerically. Therefore, the code does not run with constant time step. The maximum time step test is performed with different set of *Courant* number condition. The grid spacing is fixed with 20x20 to have fast running of simulation.
 
 
-  .. figure:: ./images/timeStep.png
-     :scale: 80%
+  .. image:: ./images/timeStep.png
+     :width: 50%
+
 
   +-----------+-----------------------+
   | Courant # | dt at 100th iteration |
