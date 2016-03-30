@@ -32,6 +32,10 @@ In this code, the variable time step method is used to maintain stable numerical
      :width: 50%
 
 
+As described earlier, the current project is to set the numerical time step variable according to the stability criteria taking *Courant* number into consideration. The *Courant* number is essentially based on convective velocity that transport the flow quantities that may propagate the numerical signal waves. Since the current system of equation is based on incompressible flow equation, the convective velocity is simply equivalent to the local velocity components at every node points. As we discovered the numerical instability characteristics with Burger's equation, the required *Courant* number is to be less than 1.0. In this regard, the time step experiment in this section seems to well satisfy this requirement. Having Courant number less than 1.0 shows well stabilized solution as we observed from the above plot.
+
+Since the current code is featured with variable time step, single value of time step can be representative of the required time step. Instead, we employed a certain numbers of *Courant* numbers as listed below. The representative time step value is chosen when the temporal iteration reaches 100.
+
   +-----------+-----------------------+
   | Courant # | dt at 100th iteration |
   +===========+=======================+

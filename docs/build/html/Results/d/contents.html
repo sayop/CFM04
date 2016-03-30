@@ -71,7 +71,11 @@
 <p>In this code, the variable time step method is used to maintain stable numerically. Therefore, the code does not run with constant time step. The maximum time step test is performed with different set of <em>Courant</em> number condition. The grid spacing is fixed with 20x20 to have fast running of simulation.</p>
 <blockquote>
 <div><a class="reference internal image-reference" href="../../_images/timeStep.png"><img alt="../../_images/timeStep.png" src="../../_images/timeStep.png" style="width: 50%;" /></a>
-<table border="1" class="docutils">
+</div></blockquote>
+<p>As described earlier, the current project is to set the numerical time step variable according to the stability criteria taking <em>Courant</em> number into consideration. The <em>Courant</em> number is essentially based on convective velocity that transport the flow quantities that may propagate the numerical signal waves. Since the current system of equation is based on incompressible flow equation, the convective velocity is simply equivalent to the local velocity components at every node points. As we discovered the numerical instability characteristics with Burger&#8217;s equation, the required <em>Courant</em> number is to be less than 1.0. In this regard, the time step experiment in this section seems to well satisfy this requirement. Having Courant number less than 1.0 shows well stabilized solution as we observed from the above plot.</p>
+<p>Since the current code is featured with variable time step, single value of time step can be representative of the required time step. Instead, we employed a certain numbers of <em>Courant</em> numbers as listed below. The representative time step value is chosen when the temporal iteration reaches 100.</p>
+<blockquote>
+<div><table border="1" class="docutils">
 <colgroup>
 <col width="32%" />
 <col width="68%" />
