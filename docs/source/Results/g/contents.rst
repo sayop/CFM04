@@ -13,7 +13,7 @@ In this section, two choices of grid spacing conditions were made to see the eff
 - NxN = 20x30
 
 .. image:: ./images/Re100/strm_20x30.png
-   :width: 50%
+   :width: 40%
 
 <Streamlines for 20x30 case>
 
@@ -21,7 +21,7 @@ In this section, two choices of grid spacing conditions were made to see the eff
 - NxN = 40x60
 
 .. image:: ./images/Re100/strm_40x60.png
-   :width: 50%
+   :width: 40%
 
 <Streamlines for 40x60 case>
 
@@ -41,14 +41,14 @@ The current test is conducted with higher Reynolds number condition.
 - NxN = 20x30
 
 .. image:: ./images/Re500/strm_20x30.png
-   :width: 50%
+   :width: 40%
 
 <Streamlines for 20x30 case>
 
 - NxN = 40x60
 
 .. image:: ./images/Re500/strm_40x60.png
-   :width: 50%
+   :width: 40%
 
 <Streamlines for 40x60 case>
 
