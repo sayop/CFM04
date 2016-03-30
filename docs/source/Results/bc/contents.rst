@@ -14,19 +14,19 @@ In this test, the lid cavity's velocity is set to make the Reynolds number set t
 - NxN = 10x10
 
 .. image:: ./images/Re100/strm_10x10.png
-   :width: 80%
+   :width: 50%
 
 <Streamlines of 10x10 case runs>
 
 
 .. image:: ./images/Re100/uVel_10x10.png
-   :width: 60%
+   :width: 40%
 
 <Centerline u-velocity compared with Ghia's numerically resolved data>
 
 
 .. image:: ./images/Re100/vVel_10x10.png
-   :width: 60%
+   :width: 40%
 
 <Centerline v-velocity compared with Ghia's numerically resolved data>
 
@@ -40,20 +40,20 @@ In this test, the lid cavity's velocity is set to make the Reynolds number set t
   
 - NxN = 20x20
 
-  .. figure:: ./images/Re100/strm_20x20.png
-     :scale: 80%
+.. image:: ./images/Re100/strm_20x20.png
+   :width: 50%
 
-  <Streamlines of 20x20 case runs>
+<Streamlines of 20x20 case runs>
 
-  .. figure:: ./images/Re100/uVel_20x20.png
-     :scale: 60%
+.. image:: ./images/Re100/uVel_20x20.png
+   :width: 40%
 
-  <Centerline u-velocity compared with Ghia's numerically resolved data>
+<Centerline u-velocity compared with Ghia's numerically resolved data>
 
-  .. figure:: ./images/Re100/vVel_20x20.png
-     :scale: 60%
+.. image:: ./images/Re100/vVel_20x20.png
+   :width: 40%
 
-  <Centerline v-velocity compared with Ghia's numerically resolved data>
+<Centerline v-velocity compared with Ghia's numerically resolved data>
 
   - **Observation**
 
@@ -67,38 +67,38 @@ In this test, the lid cavity's velocity is set to make the Reynolds number set t
 
 - NxN = 40x40
 
-  .. figure:: ./images/Re100/strm_40x40.png
-     :scale: 80%
+.. image:: ./images/Re100/strm_40x40.png
+   :width: 50%
 
-  <Streamlines of 40x40 case runs>
+<Streamlines of 40x40 case runs>
 
-  .. figure:: ./images/Re100/uVel_40x40.png
-     :scale: 60%
+.. image:: ./images/Re100/uVel_40x40.png
+   :width: 40%
 
-  <Centerline u-velocity compared with Ghia's numerically resolved data>
+<Centerline u-velocity compared with Ghia's numerically resolved data>
 
-  .. figure:: ./images/Re100/vVel_40x40.png
-     :scale: 60%
+.. image:: ./images/Re100/vVel_40x40.png
+   :width: 40%
 
-  <Centerline v-velocity compared with Ghia's numerically resolved data>
+<Centerline v-velocity compared with Ghia's numerically resolved data>
 
 
 - NxN = 60x60
 
-  .. figure:: ./images/Re100/strm_60x60.png
-     :scale: 80%
+.. image:: ./images/Re100/strm_60x60.png
+   :width: 50%
 
-  <Streamlines of 60x60 case runs>
+<Streamlines of 60x60 case runs>
 
-  .. figure:: ./images/Re100/uVel_60x60.png
-     :scale: 60%
+.. image:: ./images/Re100/uVel_60x60.png
+   :width: 40%
 
-  <Centerline u-velocity compared with Ghia's numerically resolved data>
+<Centerline u-velocity compared with Ghia's numerically resolved data>
 
-  .. figure:: ./images/Re100/vVel_60x60.png
-     :scale: 60%
+.. image:: ./images/Re100/vVel_60x60.png
+   :width: 40%
 
-  <Centerline v-velocity compared with Ghia's numerically resolved data>
+<Centerline v-velocity compared with Ghia's numerically resolved data>
 
   - **Observation**
    
@@ -116,33 +116,29 @@ In this test, the lid cavity's velocity is set to make the Reynolds number set t
 
 - NxN = 20x20
 
-  .. figure:: ./images/Re500/strm_20x20.png
-     :scale: 80%
+.. image:: ./images/Re500/strm_20x20.png
+   :width: 50%
 
-  - u-velocity
 
-    .. figure:: ./images/Re500/uVel_20x20.png
-       :scale: 60%
+.. image:: ./images/Re500/uVel_20x20.png
+   :width: 40%
 
-  - v-velocity
 
-    .. figure:: ./images/Re500/vVel_20x20.png
-       :scale: 60%
+.. image:: ./images/Re500/vVel_20x20.png
+   :width: 40%
 
 |
 
 
 - NxN = 40x40
 
-  .. figure:: ./images/Re500/strm_40x40.png
-     :scale: 80%
+.. image:: ./images/Re500/strm_40x40.png
+   :width: 50%
 
-  - u-velocity
 
-    .. figure:: ./images/Re500/uVel_40x40.png
-       :scale: 60%
+.. image:: ./images/Re500/uVel_40x40.png
+   :width: 40%
 
-  - v-velocity
 
-    .. figure:: ./images/Re500/vVel_40x40.png
-       :scale: 60%
+.. image:: ./images/Re500/vVel_40x40.png
+   :width: 40%
