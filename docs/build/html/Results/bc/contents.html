@@ -57,23 +57,26 @@
 <p>Consider the case when <span class="math">\(H=W\)</span> (a square cavity). Here, the Reynolds number, <span class="math">\(Re=UW/\nu\)</span>, characterizes the flow patters. Compute the steady state solutions for both <span class="math">\(Re=100\)</span> and <span class="math">\(Re=500\)</span>. Plot the flow streamlines and centerline profiles (<span class="math">\(u\)</span> vs. <span class="math">\(y\)</span> and <span class="math">\(v\)</span> vs. <span class="math">\(x\)</span> through the center of the domain). For <span class="math">\(Re=100\)</span>, valdiate your method by comparing your results to data from given literature.</p>
 <div class="section" id="re-100">
 <h2>Re = 100<a class="headerlink" href="#re-100" title="Permalink to this headline">¶</a></h2>
+<p>In this test, the lid cavity&#8217;s velocity is set to make the Reynolds number set to 100. To see the qualitative effect of different grid spacing, four different grid resolution conditions is employed and compared together in this page.</p>
 <ul>
 <li><p class="first">NxN = 10x10</p>
 <div class="figure">
 <a class="reference internal image-reference" href="../../_images/strm_10x10.png"><img alt="../../_images/strm_10x10.png" src="../../_images/strm_10x10.png" style="width: 480.0px; height: 400.0px;" /></a>
 </div>
-<ul>
-<li><p class="first">u-velocity</p>
+<p>&lt;Streamlines of 10x10 case runs&gt;</p>
 <div class="figure">
 <a class="reference internal image-reference" href="../../_images/uVel_10x10.png"><img alt="../../_images/uVel_10x10.png" src="../../_images/uVel_10x10.png" style="width: 360.0px; height: 360.0px;" /></a>
 </div>
-</li>
-<li><p class="first">v-velocity</p>
+<p>&lt;Centerline u-velocity compared with Ghia&#8217;s numerically resolved data&gt;</p>
 <div class="figure">
 <a class="reference internal image-reference" href="../../_images/vVel_10x10.png"><img alt="../../_images/vVel_10x10.png" src="../../_images/vVel_10x10.png" style="width: 420.0px; height: 360.0px;" /></a>
 </div>
-</li>
-<li><p class="first"><strong>Observation</strong></p>
+<p>&lt;Centerline v-velocity compared with Ghia&#8217;s numerically resolved data&gt;</p>
+<ul class="simple">
+<li><strong>Observation</strong><ul>
+<li>Very coarse grid resolution doesn&#8217;t produce well-predicted data when it is compared to the reference data.</li>
+<li>Even though the streamlines seems to penetrate the wall, it does not necessarily mean it pass through it. It it because the default streamline generation feature of Python does not produce properly when it is resolved on less grid points.</li>
+</ul>
 </li>
 </ul>
 </li>
@@ -86,18 +89,20 @@
 <div class="figure">
 <a class="reference internal image-reference" href="../../_images/strm_20x20.png"><img alt="../../_images/strm_20x20.png" src="../../_images/strm_20x20.png" style="width: 480.0px; height: 400.0px;" /></a>
 </div>
-<ul>
-<li><p class="first">u-velocity</p>
+<p>&lt;Streamlines of 20x20 case runs&gt;</p>
 <div class="figure">
 <a class="reference internal image-reference" href="../../_images/uVel_20x20.png"><img alt="../../_images/uVel_20x20.png" src="../../_images/uVel_20x20.png" style="width: 360.0px; height: 360.0px;" /></a>
 </div>
-</li>
-<li><p class="first">v-velocity</p>
+<p>&lt;Centerline u-velocity compared with Ghia&#8217;s numerically resolved data&gt;</p>
 <div class="figure">
 <a class="reference internal image-reference" href="../../_images/vVel_20x20.png"><img alt="../../_images/vVel_20x20.png" src="../../_images/vVel_20x20.png" style="width: 420.0px; height: 360.0px;" /></a>
 </div>
-</li>
-<li><p class="first"><strong>Observation</strong></p>
+<p>&lt;Centerline v-velocity compared with Ghia&#8217;s numerically resolved data&gt;</p>
+<ul class="simple">
+<li><strong>Observation</strong><ul>
+<li>Denser grid resolution tends to produce better results. The resolved u and v velocities look closer to the reference data.</li>
+<li>Compared to 10x10 case, the streamline produced with denser grid resolution looks more physically reasonable.</li>
+</ul>
 </li>
 </ul>
 </li>
@@ -110,35 +115,34 @@
 <div class="figure">
 <a class="reference internal image-reference" href="../../_images/strm_40x40.png"><img alt="../../_images/strm_40x40.png" src="../../_images/strm_40x40.png" style="width: 480.0px; height: 400.0px;" /></a>
 </div>
-<ul>
-<li><p class="first">u-velocity</p>
+<p>&lt;Streamlines of 40x40 case runs&gt;</p>
 <div class="figure">
 <a class="reference internal image-reference" href="../../_images/uVel_40x40.png"><img alt="../../_images/uVel_40x40.png" src="../../_images/uVel_40x40.png" style="width: 360.0px; height: 360.0px;" /></a>
 </div>
-</li>
-<li><p class="first">v-velocity</p>
+<p>&lt;Centerline u-velocity compared with Ghia&#8217;s numerically resolved data&gt;</p>
 <div class="figure">
 <a class="reference internal image-reference" href="../../_images/vVel_40x40.png"><img alt="../../_images/vVel_40x40.png" src="../../_images/vVel_40x40.png" style="width: 420.0px; height: 360.0px;" /></a>
 </div>
-</li>
-</ul>
+<p>&lt;Centerline v-velocity compared with Ghia&#8217;s numerically resolved data&gt;</p>
 </li>
 <li><p class="first">NxN = 60x60</p>
 <div class="figure">
 <a class="reference internal image-reference" href="../../_images/strm_60x60.png"><img alt="../../_images/strm_60x60.png" src="../../_images/strm_60x60.png" style="width: 480.0px; height: 400.0px;" /></a>
 </div>
-<ul>
-<li><p class="first">u-velocity</p>
+<p>&lt;Streamlines of 60x60 case runs&gt;</p>
 <div class="figure">
 <a class="reference internal image-reference" href="../../_images/uVel_60x60.png"><img alt="../../_images/uVel_60x60.png" src="../../_images/uVel_60x60.png" style="width: 360.0px; height: 360.0px;" /></a>
 </div>
-</li>
-<li><p class="first">v-velocity</p>
+<p>&lt;Centerline u-velocity compared with Ghia&#8217;s numerically resolved data&gt;</p>
 <div class="figure">
 <a class="reference internal image-reference" href="../../_images/vVel_60x60.png"><img alt="../../_images/vVel_60x60.png" src="../../_images/vVel_60x60.png" style="width: 420.0px; height: 360.0px;" /></a>
 </div>
-</li>
-<li><p class="first"><strong>Observation</strong></p>
+<p>&lt;Centerline v-velocity compared with Ghia&#8217;s numerically resolved data&gt;</p>
+<ul class="simple">
+<li><strong>Observation</strong><ul>
+<li>Having resolution of 60x60 makes finally the resolved data looks very close to the reference data.</li>
+<li>We observed the denser grid size produces the more well-matching data with reference data.</li>
+</ul>
 </li>
 </ul>
 </li>

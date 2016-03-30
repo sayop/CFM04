@@ -74,44 +74,33 @@ In this problem set, we are supposed to solve the Navier-Stokes equations having
 
      \frac{1}{\Delta t} \frac{\partial u^{*}}{\partial x_{i}} = \frac{\partial^{2} p^{n+1}}{\partial x_{i} \partial x_{i}}
 
-
+  Since the equation is characterized with elliptic equation so it becomes boundary condition problem in the given domain. Because of two dimensional space and non-linearity, it needs to be solved with point-iterative method such as Jacobi method and Gauss-Seidel method. In this project, this solution for pressure is resolved with succesive over-relaxation method to have faster convergence.
 
   
 - Vector form of transport equations
 
-  Rewriting the previously drived non-dimensionalized continuity and momentum equation in vector form generates a simple format that eases implementation of the numerical method. The above transport equation can be newly formed as shown below:
+  Rewriting the previously drived non-dimensionalized momentum equations in vector form generates a simple format that eases implementation of the numerical method. The above transport equation can be newly formed as shown below:
 
   .. math::
 
-     \frac{\partial \vec{U}}{\partial t} + \frac{\partial \vec{E}}{\partial x} + \frac{\partial \vec{F}}{\partial y} = \frac{1}{\text{Re}} \left ( \frac{\partial^{2}}{\partial x^{2}} + \frac{\partial^{2}}{\partial y^{2}} \right ) \vec{U}
+     \frac{\partial \vec{U}}{\partial t} + \frac{\partial \vec{E}}{\partial x} + \frac{\partial \vec{F}}{\partial y} + \vec{\triangledown }p = \frac{1}{\text{Re}} \left ( \frac{\partial^{2}}{\partial x^{2}} + \frac{\partial^{2}}{\partial y^{2}} \right ) \vec{U}
 
   where the each of vector elements are summarized below:
 
   .. math::
 
-     \vec{U} = \begin{bmatrix}P\\ u\\ v \end{bmatrix}, \;\; \vec{E} = \begin{bmatrix} \frac{u}{\beta}\\ uu + P\\ uv\end{bmatrix}, \;\; \vec{F} = \begin{bmatrix} \frac{v}{\beta}\\ uv\\ vv + P\end{bmatrix}
+     \vec{U} = \begin{bmatrix}u\\ v \end{bmatrix}, \;\; \vec{E} = \begin{bmatrix} uu \\ uv\end{bmatrix}, \;\; \vec{F} = \begin{bmatrix} uv\\ vv \end{bmatrix}, \;\; \vec{\triangledown} = \begin{bmatrix} \frac{\partial}{\partial x}\\ \frac{\partial}{\partial y} \end{bmatrix}
+
+  Compared to the previous homework that constructs the flux vector including pressure force, the current flux vectors :math:`E` and :math:`F` contain only convection terms in x and y directions. This is the purpose that the numerical method separates two different steps: evaluating intermediates velocities and projection of this velocities onto the divergence free satisfied velocity field.
 
   Now this is good to go further for descritization because the given task is to solve explicit form of discretization equation. Even though the derived form of transport equation is not linearized, each of vectors above are easily discretized in terms of their elements that are combinations of each primitive variables. Thus, in this project, actual discretization has been doen form the driven transport equation above.
 
 - Finding time step algorithm
 
-  In order to find time step that may stabilize the numerical solution, we need to know system convecting velocity as we pick the coefficient of spatial derivative terms in Burger's and Euler equations as the convection velocity. The driven system of equation is not a single partial different equation but a set of three different partial different equation. To find the convection speed of numerical information in the time and space domains, we need to first linearize the given system of equations and find the Eigen values. The linearization can be obatained by following process. The driven system of PDE should be reformulated in linearized set of equations:
+  Contrary to the previous homework, the system of partial differential equation is composed of only momentum conservation equations in x and y direction, that is, this system does not contain continuity equation. Note that the mass conservation only applies as a divergence free constraint. So the system convection velocity is straighforward rather than having to find eigenvalues of coefficient matrices. So the Courant number relation for the two-dimensional system of equation can be defined by:
 
   .. math::
 
-     \frac{\partial \vec{U}}{\partial t}  + \left [ A \right ] \frac{\partial \vec{U}}{\partial x} + \left [ B \right ] \frac{\partial \vec{U}}{\partial y} = \frac{1}{\text{Re}} \left ( \frac{\partial^{2}}{\partial x^{2}} + \frac{\partial^{2}}{\partial y^{2}} \right ) \vec{U}
+     \text{Courant} = \frac{u dt}{dx} + \frac{v dt}{dy}
 
-  Now we have found two coefficient matrices of convection terms and the spatial derivatives is now taken with respect to :math:`\vec{U}` only. Despite the vector form, the PDE form is a identical with Burger's equation. The coefficient matrices are below listed:
-
-  .. math::
-
-     \left [ A \right ] = \begin{bmatrix} 0 & \frac{1}{\beta} & 0 \\ 1 & 2u & 0\\ 0 & v & u \end{bmatrix}, \;\; \left [ B \right ] = \begin{bmatrix} 0 & 0 & \frac{1}{\beta} \\ 0 & v & u\\ 1 & 0 & 2v \end{bmatrix}
-
-  The resolved Eigen values of :math:`\left [ A \right ]` and :math:`\left [ B \right ]` matrices are :math:`u, u+a, u-a` and :math:`v, v+a, v-a`, respectively. Taking :math:`\left [ A \right ]` for example, the maximum convection velocity that transmit the numerical information can then be :math:`\left | u  \right | + a`. Therefore, the Courant number for this case can also be determined by:
-
-  .. math::
-
-     
-
-
-     
+  The numerical time step is evaluted as a minimum time step that satifies the given relation at every computational node points.
