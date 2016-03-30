@@ -56,10 +56,26 @@
 <h1>Problem1 - e, f<a class="headerlink" href="#problem1-e-f" title="Permalink to this headline">¶</a></h1>
 <p>Compare your results with different grid resolutions to evaluate the numerical error and the order of the scheme.</p>
 <p><strong>Re = 100</strong></p>
+<p>Here, required iteration number for temporal integration is illustrated for the different grid spacing condition. User-defined convergence rate for this test was set to 0.00005 as a normalized residual number.</p>
 <a class="reference internal image-reference" href="../../_images/uRes_Re100.png"><img alt="../../_images/uRes_Re100.png" src="../../_images/uRes_Re100.png" style="width: 40%;" /></a>
 <p>&lt;Residual of u-velocity change in numerical iteration&gt;</p>
+<ul class="simple">
+<li>Observation for iteration number<ul>
+<li>As the grid spacing becomes smaller, the required iteration numbers to satisfy the pre-specified convergence rate gets bigger. So 60x60 case takes almost 4,000 iterations to have steady-state solution.</li>
+<li>But it does NOT necessarily mean that it reaches the steady state at later physical time. According to the Courant number definition, the time step for smaller grid spacing must be smaller than the coarser grid resolution.</li>
+</ul>
+</li>
+</ul>
+<p>In this test, the root-mean squared error is evaluted for different grid spacing conditions. The RMS error was resolved by comparing the numerically resolved solution to the Ghia&#8217;s data when it reachs the steady-state solution. The steady-state is assumed to be reached when the normalized resdiual number becomes less than the pre-specified convergence rate as mentioned above.</p>
 <a class="reference internal image-reference" href="../../_images/RMSerr_Re100.png"><img alt="../../_images/RMSerr_Re100.png" src="../../_images/RMSerr_Re100.png" style="width: 40%;" /></a>
 <p>&lt;RMS error of u-velocity (reference: Ghia&#8217;s v-velocity data)&gt;</p>
+<ul class="simple">
+<li>Observation for RMS error<ul>
+<li>As expected, the smaller grid spacing, the smaller error is obtained.</li>
+</ul>
+</li>
+</ul>
+<p>Here, the computational times consumed for steady-state solution are compared with different grid resolution. We observe dramatically increased computational time for dense grid spacing. This is because the more grid points consumes more time for resolving Poisson&#8217;s equation solution. Even use of successive over-relaxation method for point-iterative method for pressure correction dramatically increases the number of iteration. The massive computational load was made with the pressure correction step at every time step.</p>
 <a class="reference internal image-reference" href="../../_images/computeTime_Re100.png"><img alt="../../_images/computeTime_Re100.png" src="../../_images/computeTime_Re100.png" style="width: 40%;" /></a>
 <p>&lt;Computational time with different grid spacing&gt;</p>
 </div>
