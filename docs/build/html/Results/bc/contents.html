@@ -58,29 +58,24 @@
 <div class="section" id="re-100">
 <h2>Re = 100<a class="headerlink" href="#re-100" title="Permalink to this headline">¶</a></h2>
 <p>In this test, the lid cavity&#8217;s velocity is set to make the Reynolds number set to 100. To see the qualitative effect of different grid spacing, four different grid resolution conditions is employed and compared together in this page.</p>
-<ul>
-<li><p class="first">NxN = 10x10</p>
-<div class="figure">
-<a class="reference internal image-reference" href="../../_images/strm_10x10.png"><img alt="../../_images/strm_10x10.png" src="../../_images/strm_10x10.png" style="width: 480.0px; height: 400.0px;" /></a>
-</div>
-<p>&lt;Streamlines of 10x10 case runs&gt;</p>
-<div class="figure">
-<a class="reference internal image-reference" href="../../_images/uVel_10x10.png"><img alt="../../_images/uVel_10x10.png" src="../../_images/uVel_10x10.png" style="width: 360.0px; height: 360.0px;" /></a>
-</div>
-<p>&lt;Centerline u-velocity compared with Ghia&#8217;s numerically resolved data&gt;</p>
-<div class="figure">
-<a class="reference internal image-reference" href="../../_images/vVel_10x10.png"><img alt="../../_images/vVel_10x10.png" src="../../_images/vVel_10x10.png" style="width: 420.0px; height: 360.0px;" /></a>
-</div>
-<p>&lt;Centerline v-velocity compared with Ghia&#8217;s numerically resolved data&gt;</p>
 <ul class="simple">
+<li>NxN = 10x10</li>
+</ul>
+<a class="reference internal image-reference" href="../../_images/strm_10x10.png"><img alt="../../_images/strm_10x10.png" src="../../_images/strm_10x10.png" style="width: 80%;" /></a>
+<p>&lt;Streamlines of 10x10 case runs&gt;</p>
+<a class="reference internal image-reference" href="../../_images/uVel_10x10.png"><img alt="../../_images/uVel_10x10.png" src="../../_images/uVel_10x10.png" style="width: 60%;" /></a>
+<p>&lt;Centerline u-velocity compared with Ghia&#8217;s numerically resolved data&gt;</p>
+<a class="reference internal image-reference" href="../../_images/vVel_10x10.png"><img alt="../../_images/vVel_10x10.png" src="../../_images/vVel_10x10.png" style="width: 60%;" /></a>
+<p>&lt;Centerline v-velocity compared with Ghia&#8217;s numerically resolved data&gt;</p>
+<blockquote>
+<div><ul class="simple">
 <li><strong>Observation</strong><ul>
 <li>Very coarse grid resolution doesn&#8217;t produce well-predicted data when it is compared to the reference data.</li>
 <li>Even though the streamlines seems to penetrate the wall, it does not necessarily mean it pass through it. It it because the default streamline generation feature of Python does not produce properly when it is resolved on less grid points.</li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
+</div></blockquote>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>

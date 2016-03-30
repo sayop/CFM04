@@ -13,22 +13,22 @@ In this test, the lid cavity's velocity is set to make the Reynolds number set t
 
 - NxN = 10x10
 
-  .. figure:: ./images/Re100/strm_10x10.png
-     :scale: 80%
+.. image:: ./images/Re100/strm_10x10.png
+   :width: 80%
 
-  <Streamlines of 10x10 case runs>
-
-
-  .. figure:: ./images/Re100/uVel_10x10.png
-     :scale: 60%
-
-  <Centerline u-velocity compared with Ghia's numerically resolved data>
+<Streamlines of 10x10 case runs>
 
 
-  .. figure:: ./images/Re100/vVel_10x10.png
-     :scale: 60%
+.. image:: ./images/Re100/uVel_10x10.png
+   :width: 60%
 
-  <Centerline v-velocity compared with Ghia's numerically resolved data>
+<Centerline u-velocity compared with Ghia's numerically resolved data>
+
+
+.. image:: ./images/Re100/vVel_10x10.png
+   :width: 60%
+
+<Centerline v-velocity compared with Ghia's numerically resolved data>
 
   - **Observation**
 
